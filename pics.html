@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            /* Manly Glass: Darker and sharper */
+            --glass: rgba(0, 0, 0, 0.4); 
+            --border: rgba(255, 255, 255, 0.15); 
+            --accent: #ff4d6d;
+        }
+        
+        body {
+            margin: 0; padding: 0; min-height: 100vh;
+            /* UPGRADED BACKGROUND: Deep Midnight Cherry & Royal Purple */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e, #4b001d);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            font-family: 'Montserrat', sans-serif; /* Manly & Clear Font */
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Subtle Masculine Bokeh Effect */
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.1; pointer-events: none; z-index: 0;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive; /* Keeps the "Lovely" touch */
+            color: white; font-size: 3.8rem; margin: 60px 0;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px; z-index: 1;
+        }
+
+        /* 2-Column Grid Layout */
+        .photo-grid {
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px; 
+            width: 92%; 
+            max-width: 850px; 
+            padding-bottom: 120px;
+            z-index: 1;
+        }
+
+        .photo-card {
+            background: var(--glass); 
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border); 
+            padding: 8px; /* Thinner border for a cleaner look */
+            border-radius: 12px; /* Sharper corners for a manly feel */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            animation: fadeInUp 0.8s ease forwards; 
+            opacity: 0;
+        }
+
+        .photo-card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .photo-card img { 
+            width: 100%; height: auto; 
+            border-radius: 8px; display: block;
+            filter: grayscale(20%); /* Modern, masculine photo style */
+            transition: 0.3s;
+        }
+        
+        .photo-card:hover img { filter: grayscale(0%); }
+
+        /* Zoom Modal */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.98);
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(20px);
+            cursor: zoom-out;
+        }
+
+        .modal-content {
+            max-width: 95%; max-height: 90%;
+            border: 2px solid var(--border);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 1);
+            transform: scale(0.8); opacity: 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .modal.active .modal-content { transform: scale(1); opacity: 1; }
+
+        .back-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            padding: 18px 45px; 
+            background: white; 
+            color: #1a1a1a;
+            border-radius: 8px; /* Sharper corners */
+            text-decoration: none; 
+            font-weight: 900; /* Extra bold for clarity */
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { background: var(--accent); color: white; transform: scale(1.05); }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <h1>Our Memories 📸 ❤️</h1>
+
+    <div class="photo-grid">
+        <div class="photo-card" style="animation-delay: 0.1s;" onclick="openModal(this)"><img src="proj/photo1.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.2s;" onclick="openModal(this)"><img src="proj/photo2.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.3s;" onclick="openModal(this)"><img src="proj/photo3.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.4s;" onclick="openModal(this)"><img src="proj/photo4.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.5s;" onclick="openModal(this)"><img src="proj/photo5.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.6s;" onclick="openModal(this)"><img src="proj/photo6.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.7s;" onclick="openModal(this)"><img src="proj/photo7.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.8s;" onclick="openModal(this)"><img src="proj/photo8.jpg"></div>
+        <div class="photo-card" style="animation-delay: 0.9s;" onclick="openModal(this)"><img src="proj/photo9.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.0s;" onclick="openModal(this)"><img src="proj/photo10.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.1s;" onclick="openModal(this)"><img src="proj/photo11.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.2s;" onclick="openModal(this)"><img src="proj/photo12.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.3s;" onclick="openModal(this)"><img src="proj/photo13.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.4s;" onclick="openModal(this)"><img src="proj/photo14.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.5s;" onclick="openModal(this)"><img src="proj/photo15.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.6s;" onclick="openModal(this)"><img src="proj/photo16.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.7s;" onclick="openModal(this)"><img src="proj/photo17.jpg"></div>
+        <div class="photo-card" style="animation-delay: 1.8s;" onclick="openModal(this)"><img src="proj/photo18.jpg"></div>
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <a href="success.html" class="back-btn">Back to Menu</a>
+
+    <script>
+        function openModal(element) {
+            const modal = document.getElementById("imageModal");
+            const fullImg = document.getElementById("fullImage");
+            const clickedImg = element.getElementsByTagName('img')[0];
+            
+            modal.style.display = "flex";
+            fullImg.src = clickedImg.src;
+            setTimeout(() => modal.classList.add('active'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("imageModal");
+            modal.classList.remove('active');
+            setTimeout(() => modal.style.display = "none", 400);
+        }
+    </script>
+</body>
+</html>

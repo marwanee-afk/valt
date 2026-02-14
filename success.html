@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu - Hayati ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root { --glass: rgba(255, 255, 255, 0.1); --border: rgba(255, 255, 255, 0.2); --accent: #ff4d6d; }
+        body {
+            margin: 0; padding: 0; min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e, #4b001d);
+            background-size: 400% 400%; animation: gradientMove 12s ease infinite;
+            font-family: 'Montserrat', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        h1 { font-family: 'Pacifico', cursive; color: white; font-size: 3rem; margin-bottom: 50px; text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; width: 90%; max-width: 900px; }
+        .menu-item {
+            background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--border);
+            border-radius: 20px; padding: 40px; text-decoration: none; display: flex; flex-direction: column;
+            align-items: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: fadeInUp 1s ease forwards; opacity: 0;
+        }
+        .menu-item:hover { transform: translateY(-15px); border-color: var(--accent); background: rgba(255, 255, 255, 0.2); }
+        .icon { font-size: 4.5rem; margin-bottom: 15px; }
+        .label { color: white; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome, Hayati ❤️</h1>
+
+    <div class="menu-grid">
+        <a href="pics.html" class="menu-item" style="animation-delay: 0.2s;">
+            <div class="icon">📸</div>
+            <div class="label">Our Gallery</div>
+        </a>
+
+        <a href="games.html" class="menu-item" style="animation-delay: 0.4s;">
+            <div class="icon">🎮</div>
+            <div class="label">Our Game</div>
+        </a>
+
+        <a href="surprise.html" class="menu-item" style="animation-delay: 0.6s;">
+            <div class="icon">🎁</div>
+            <div class="label">A Surprise</div>
+        </a>
+    </div>
+
+</body>
+</html>

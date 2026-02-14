@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day Khadijaa! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(0, 0, 0, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-glow: 0 0 15px rgba(255, 77, 109, 0.8), 2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; color: white; overflow: hidden;
+            background-color: #000;
+        }
+
+        /* Video Background and Girly Gradient Overlay */
+        #bg-video {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; object-fit: cover; opacity: 0.4; filter: blur(2px);
+        }
+
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 400% 400%; animation: gradientMove 15s ease infinite; z-index: -3;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border); padding: 50px; border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4); text-align: center; max-width: 480px; width: 85%;
+        }
+
+        h1, .question { font-family: 'Pacifico', cursive; font-size: 3rem; text-shadow: var(--text-glow); margin-bottom: 30px; }
+        p { font-family: 'Dancing Script', cursive; font-size: 1.8rem; text-shadow: 1px 1px 5px rgba(0,0,0,0.8); }
+
+        /* Button Styling */
+        button, .icon {
+            padding: 15px 35px; border: none; border-radius: 50px; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-weight: bold;
+        }
+
+        #yes-btn { background: linear-gradient(45deg, #ff4d6d, #ff85a1); color: white; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4); }
+        .no { background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255,255,255,0.4); }
+
+        /* Name Selection Icons */
+        .special-icons { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+        .icon {
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255,255,255,0.3);
+            font-size: 1.3rem; color: white; text-align: center;
+        }
+        .icon:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
+
+        input[type="password"] {
+            padding: 15px; width: 85%; border-radius: 20px; border: 2px solid #ff85a1;
+            background: rgba(0, 0, 0, 0.5); color: white; text-align: center; font-size: 1.2rem;
+        }
+
+        .hidden { display: none; opacity: 0; }
+        .fade-in { animation: fadeIn 0.8s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .vibrate { animation: vibrate 0.4s linear; border-color: #ff4d6d !important; }
+        @keyframes vibrate { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video"><source src="heart-tunnel.mp4" type="video/mp4"></video>
+    <audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-37.mp3"></audio>
+    <audio id="wrong-sound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+    <div id="section-question" class="container">
+        <div class="question">Will you be my Valentine? ❤️</div>
+        <div style="display: flex; justify-content: center; gap: 20px;">
+            <button id="yes-btn" onclick="handleYes()">Yes!</button>
+            <button id="maybe-btn" class="no" onclick="handleMaybe()">Maybe?</button>
+        </div>
+    </div>
+
+    <div id="section-password" class="container hidden">
+        <h1>Secret Word</h1>
+        <p>You are my... 💖</p>
+        <input type="password" id="password" placeholder="Hint: 7....">
+        <button id="yes-btn" style="width: 100%; margin-top: 20px;" onclick="checkPassword()">Unlock</button>
+        <p id="error-msg" style="margin-top: 15px; font-weight: bold; color: #ffccd5;"></p>
+    </div>
+
+    <div id="section-names" class="container hidden">
+        <h1>Pick the real Marwane!</h1>
+        <div class="special-icons">
+            <div class="icon" onclick="handleWrong(this)">Marwan 👦</div>
+            <div class="icon" onclick="handleWrong(this)">Marouane 👦</div>
+            <div class="icon" onclick="handleCorrect()">Marwane 👦</div>
+        </div>
+        <p id="feedback" style="margin-top: 20px; font-weight: bold; color: #ffccd5; min-height: 24px;"></p>
+    </div>
+
+    <script>
+        let yesSize = 1;
+        const clickSound = document.getElementById('click-sound');
+        const wrongSound = document.getElementById('wrong-sound');
+
+        function handleMaybe() {
+            wrongSound.play();
+            yesSize += 0.4;
+            document.getElementById('yes-btn').style.transform = `scale(${yesSize})`;
+        }
+
+        function handleYes() {
+            clickSound.play();
+            document.getElementById('section-question').classList.add('hidden');
+            const next = document.getElementById('section-password');
+            next.classList.remove('hidden');
+            next.classList.add('fade-in');
+        }
+
+        function checkPassword() {
+            const pass = document.getElementById('password').value.toLowerCase();
+            if (pass === '7yati') {
+                clickSound.play();
+                document.getElementById('section-password').classList.add('hidden');
+                const next = document.getElementById('section-names');
+                next.classList.remove('hidden');
+                next.classList.add('fade-in');
+            } else {
+                wrongSound.play();
+                const input = document.getElementById('password');
+                document.getElementById('error-msg').textContent = "Wrong! 💔";
+                input.classList.add('vibrate');
+                setTimeout(() => input.classList.remove('vibrate'), 400);
+            }
+        }
+
+        function handleWrong(el) {
+            wrongSound.play();
+            document.getElementById('feedback').textContent = "That's not him! 😠";
+            el.classList.add('vibrate');
+            setTimeout(() => el.classList.remove('vibrate'), 400);
+        }
+
+        function handleCorrect() {
+            clickSound.play();
+            // This now correctly opens the menu page
+            window.location.href = "success.html"; 
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marwane's Quiz ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(0, 0, 0, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-glow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 77, 109, 0.6);
+        }
+
+        body {
+            margin: 0; min-height: 100vh;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #ff85a1);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .quiz-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 50px; border-radius: 40px;
+            border: 2px solid var(--glass-border);
+            text-align: center; width: 90%; max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            color: white; z-index: 5;
+        }
+
+        h1 { font-family: 'Pacifico', cursive; font-size: 3rem; text-shadow: var(--text-glow); margin-top: 0; }
+
+        .question-text { 
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            margin-bottom: 30px; 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+        /* Container for buttons to allow shuffling */
+        .options-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 18px; border-radius: 25px;
+            color: white; font-size: 1.3rem; font-weight: 700;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .option-btn:hover { 
+            background: rgba(255, 255, 255, 0.35); 
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+        }
+
+        .big-zwin {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem !important;
+            color: #fff;
+            text-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff4d6d, 0 0 60px #ff4d6d;
+            animation: bounceIn 0.8s ease-out forwards;
+            display: block; margin: 20px 0;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .hidden { display: none; }
+        .correct { background: #2ecc71 !important; border-color: white; }
+        .wrong { background: #e74c3c !important; animation: shake 0.4s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        #special-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(20, 5, 10, 0.95);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; opacity: 0; visibility: hidden; transition: 0.8s;
+            text-align: center;
+        }
+        #special-overlay.show { opacity: 1; visibility: visible; }
+    </style>
+</head>
+<body>
+
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
+
+    <div class="quiz-container">
+        <h1>Our World ❤️</h1>
+        
+        <div id="q1" class="quiz-section">
+            <p class="question-text">Chkon howa a7ssn lon 3ndi? 🎨</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="checkAnswer(this, 'blue', 'q1', 'q2')">Blue</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'pink', 'q1', 'q2')">Pink</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'black', 'q1', 'q2')">Black</button>
+            </div>
+        </div>
+
+        <div id="q2" class="quiz-section hidden">
+            <p class="question-text">Ina fer9a li kancheje3? ⚽</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="checkAnswer(this, 'real madrid', 'q2', 'q3')">Real Madrid</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'barca', 'q2', 'q3')">Barca</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'paris', 'q2', 'q3')">Paris</button>
+            </div>
+        </div>
+
+        <div id="q3" class="quiz-section hidden">
+            <p class="question-text">Best part of you that I like? 😍</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="checkAnswer(this, 'eyes', 'q3', 'q4')">Eyes 👀</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'nose', 'q3', 'q4')">Nose 👃</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'cheeks', 'q3', 'q4')">Cheeks 😊</button>
+            </div>
+        </div>
+
+        <div id="q4" class="quiz-section hidden">
+            <p class="question-text">Chna hia akter 7aja makat3jbnich? 😤</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="checkAnswer(this, 'chi 7d 3arf koulchi', 'q4', 'q5')">chi 7d 3arf koulchi</button>
+                <button class="option-btn" onclick="checkAnswer(this, 'lkdob', 'q4', 'q5')">lkdob</button>
+                <button class="option-btn" onclick="checkAnswer(this, '3ya9a', 'q4', 'q5')">3ya9a</button>
+            </div>
+        </div>
+
+        <div id="q5" class="quiz-section hidden">
+            <p class="question-text">Chno l7aja li kat3jbni fik? 💖</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="handleZwin()">Drayfa</button>
+                <button class="option-btn" onclick="handleZwin()">Katfhmini</button>
+                <button class="option-btn" onclick="handleZwin()">7nina</button>
+            </div>
+        </div>
+
+        <div id="q6" class="quiz-section hidden">
+            <p class="question-text">Fo9ach tzadit? 🎂</p>
+            <div class="options-list">
+                <button class="option-btn" onclick="showFinal()">22/12/2002</button>
+                <button class="option-btn" onclick="showFinal()">28/12/2002</button>
+                <button class="option-btn" onclick="showFinal()">02/01/2003</button>
+            </div>
+        </div>
+
+        <div id="zwin-box" class="hidden">
+            <span class="big-zwin">Kolchi fik zwin! ❤️</span>
+        </div>
+    </div>
+
+    <div id="special-overlay">
+        <h1 style="font-family: 'Dancing Script'; font-size: 3.5rem;">Ta ana ma3rftch! 😂</h1>
+        <p style="font-size: 1.5rem; color: white;">Mohim li 3arf hia:</p>
+        <span style="font-size: 2.5rem; color: #ff4d6d; font-weight: 800; text-shadow: 0 0 20px #ff4d6d; margin: 20px 0;">26/04/2025 ❤️</span>
+        <button class="option-btn" style="background:#ff4d6d; width:auto; padding: 15px 50px;" onclick="location.href='success.html'">Back</button>
+    </div>
+
+    <script>
+        const answers = {'q1': 'blue', 'q2': 'real madrid', 'q3': 'eyes', 'q4': 'chi 7d 3arf koulchi'};
+
+        // Shuffle function to mix the order of the answers
+        function shuffleOptions() {
+            document.querySelectorAll('.options-list').forEach(list => {
+                const buttons = Array.from(list.children);
+                for (let i = buttons.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    list.appendChild(buttons[j]);
+                }
+            });
+        }
+
+        // Run shuffle when page loads
+        window.onload = shuffleOptions;
+
+        function checkAnswer(btn, choice, currentId, nextId) {
+            if (choice === answers[currentId]) {
+                btn.classList.add('correct');
+                document.getElementById('success-sound').play();
+                setTimeout(() => {
+                    document.getElementById(currentId).classList.add('hidden');
+                    document.getElementById(nextId).classList.remove('hidden');
+                }, 800);
+            } else {
+                btn.classList.add('wrong');
+                setTimeout(() => btn.classList.remove('wrong'), 400);
+            }
+        }
+
+        function handleZwin() {
+            document.getElementById('success-sound').play();
+            document.getElementById('q5').classList.add('hidden');
+            const zwinBox = document.getElementById('zwin-box');
+            zwinBox.classList.remove('hidden');
+            setTimeout(() => {
+                zwinBox.classList.add('hidden');
+                document.getElementById('q6').classList.remove('hidden');
+            }, 3000);
+        }
+
+        function showFinal() {
+            document.getElementById('success-sound').play();
+            document.getElementById('special-overlay').classList.add('show');
+        }
+    </script>
+</body>
+</html>
